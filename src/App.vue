@@ -6,24 +6,14 @@
   </div>
 </template>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  line-height: 1.5;
-}
-a {
-  text-decoration: none;
-  color: inherit;
-}
+<style lang="scss">
+@import "src/assets/style/helper.scss";
+@import "src/assets/style/reset.scss";
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  font-family: $font-hei;
   color: #2c3e50;
+  font-size: 16px;
+  line-height: 1.5;
 }
 </style>

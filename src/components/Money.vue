@@ -1,5 +1,5 @@
 <template>
-  <Layout>money 页面 <Icon name="money" /> </Layout>
+  <Layout><p>money 页面</p></Layout>
 </template>
 
 <script lang="ts" setup></script>

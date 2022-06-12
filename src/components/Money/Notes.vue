@@ -2,12 +2,25 @@
   <div>
     <label class="notes">
       <span class="name">备注</span>
-      <input type="text" placeholder="在这里输入备注" />
+      <input
+        type="text"
+        placeholder="在这里输入备注"
+        :value="value"
+        @input="onInput"
+      />
     </label>
   </div>
 </template>
 
-<scrip lang="ts" setup name="Notes"></scrip>
+<script lang="ts" setup name="Notes">
+import { ref } from "vue";
+
+const value = ref("");
+const onInput = (event: KeyboardEvent) => {
+  const input = event.target as HTMLInputElement;
+  value.value = input.value;
+};
+</script>
 
 <style lang="scss" scoped>
 .notes {

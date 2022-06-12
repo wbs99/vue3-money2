@@ -1,26 +1,62 @@
 <template>
   <div class="numberPad">
-    <div class="output">100</div>
+    <div class="output">{{ output }}</div>
     <div class="buttons">
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>删除</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>清空</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
+      <button @click="inputContent">1</button>
+      <button @click="inputContent">2</button>
+      <button @click="inputContent">3</button>
+      <button @click="deleteContent">删除</button>
+      <button @click="inputContent">4</button>
+      <button @click="inputContent">5</button>
+      <button @click="inputContent">6</button>
+      <button @click="clearContent">清空</button>
+      <button @click="inputContent">7</button>
+      <button @click="inputContent">8</button>
+      <button @click="inputContent">9</button>
       <button class="ok">OK</button>
-      <button class="zero">0</button>
-      <button>.</button>
+      <button @click="inputContent" class="zero">0</button>
+      <button @click="inputContent">.</button>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup name="Money"></script>
+<script lang="ts" setup name="NumberPad">
+import { ref } from "vue";
+
+const output = ref("0");
+
+const inputContent = (event: MouseEvent) => {
+  const button = event.target as HTMLButtonElement;
+  const input = button.textContent!;
+  if (output.value.length === 16) {
+    return;
+  }
+  if (output.value === "0") {
+    if ("123456789".includes(input)) {
+      output.value = input;
+    } else {
+      output.value += input;
+    }
+    return;
+  }
+  if (output.value.includes(".") && input === ".") {
+    return;
+  }
+
+  output.value += input;
+};
+const clearContent = () => {
+  output.value = "0";
+};
+
+const deleteContent = () => {
+  if (output.value.length === 1) {
+    output.value = "0";
+    return;
+  }
+  output.value = output.value.substring(0, output.value.length - 1);
+};
+</script>
 
 <style lang="scss" scoped>
 @import "@/assets/style/helper.scss";
@@ -33,6 +69,7 @@
     font-family: Consolas, monospace;
     padding: 9px 16px;
     text-align: right;
+    height: 72px;
   }
   .buttons {
     @extend %clearFix;

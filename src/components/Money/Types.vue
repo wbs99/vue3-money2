@@ -1,13 +1,27 @@
 <template>
   <div>
     <ul class="types">
-      <li class="selected">支出</li>
-      <li>收入</li>
+      <li :class="defaultType === '-' && 'selected'" @click="selectTypes('-')">
+        支出
+      </li>
+      <li :class="defaultType === '+' && 'selected'" @click="selectTypes('+')">
+        收入
+      </li>
     </ul>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup name="Types">
+import { ref } from "vue";
+
+const defaultType = ref("-");
+const selectTypes = (type: string) => {
+  if (type !== "-" && type !== "+") {
+    throw new Error("type must be '-' or '+'");
+  }
+  defaultType.value = type;
+};
+</script>
 
 <style lang="scss" scoped>
 .types {

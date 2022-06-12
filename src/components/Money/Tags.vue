@@ -2,15 +2,37 @@
   <div class="tags">
     <div class="new"><button>新增标签</button></div>
     <ul class="current">
-      <li>衣</li>
-      <li>食</li>
-      <li>住</li>
-      <li>行</li>
+      <li
+        v-for="(tag, index) in props.dataSource"
+        :key="index"
+        :class="selectedTags.includes(tag as string) ? 'selected' : ''"
+        @click="toggle(tag as string)"
+      >
+        {{ tag }}
+      </li>
     </ul>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { reactive } from "vue";
+
+const props = defineProps({
+  dataSource: {
+    type: Array,
+  },
+});
+
+const selectedTags = reactive([]);
+const toggle = (tag: string) => {
+  const index = selectedTags.indexOf(tag);
+  if (index >= 0) {
+    selectedTags.splice(index, 1);
+  } else {
+    selectedTags.push(tag);
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 .tags {
@@ -31,6 +53,9 @@
       padding: 0 16px;
       margin-right: 12px;
       margin-top: 4px;
+      &.selected {
+        background: #ff7517;
+      }
     }
   }
   > .new {

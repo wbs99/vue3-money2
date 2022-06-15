@@ -1,10 +1,10 @@
 <template>
   <div>
     <ul class="types">
-      <li :class="defaultType === '-' && 'selected'" @click="selectTypes('-')">
+      <li :class="props.value === '-' && 'selected'" @click="selectTypes('-')">
         支出
       </li>
-      <li :class="defaultType === '+' && 'selected'" @click="selectTypes('+')">
+      <li :class="props.value === '+' && 'selected'" @click="selectTypes('+')">
         收入
       </li>
     </ul>
@@ -12,14 +12,19 @@
 </template>
 
 <script lang="ts" setup name="Types">
-import { ref } from "vue";
+const props = defineProps({
+  value: {
+    type: String,
+    default: "-",
+  },
+});
+const emit = defineEmits(["update:value"]);
 
-const defaultType = ref("-");
 const selectTypes = (type: string) => {
   if (type !== "-" && type !== "+") {
     throw new Error("type must be '-' or '+'");
   }
-  defaultType.value = type;
+  emit("update:value", type);
 };
 </script>
 

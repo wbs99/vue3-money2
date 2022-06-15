@@ -13,7 +13,7 @@
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
       <button @click="inputContent">9</button>
-      <button class="ok">OK</button>
+      <button class="ok" @click="ok">OK</button>
       <button @click="inputContent" class="zero">0</button>
       <button @click="inputContent">.</button>
     </div>
@@ -21,9 +21,21 @@
 </template>
 
 <script lang="ts" setup name="NumberPad">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+
+onMounted(() => {
+  output.value = props.value.toString();
+});
 
 const output = ref("0");
+
+const props = defineProps({
+  value: {
+    type: Number,
+    default: 0,
+  },
+});
+const emit = defineEmits(["update:value"]);
 
 const inputContent = (event: MouseEvent) => {
   const button = event.target as HTMLButtonElement;
@@ -48,13 +60,15 @@ const inputContent = (event: MouseEvent) => {
 const clearContent = () => {
   output.value = "0";
 };
-
 const deleteContent = () => {
   if (output.value.length === 1) {
     output.value = "0";
     return;
   }
   output.value = output.value.substring(0, output.value.length - 1);
+};
+const ok = () => {
+  emit("update:value", parseFloat(output.value));
 };
 </script>
 

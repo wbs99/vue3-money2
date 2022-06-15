@@ -8,9 +8,24 @@
 </template>
 
 <script lang="ts" setup name="Notes">
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+
+const props = defineProps({
+  value: {
+    type: String,
+    default: "",
+  },
+});
+const emit = defineEmits(["update:value"]);
 
 const value = ref("");
+onMounted(() => {
+  value.value = props.value;
+});
+
+watch(value, newValue => {
+  emit("update:value", newValue);
+});
 </script>
 
 <style lang="scss" scoped>

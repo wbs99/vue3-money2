@@ -1,6 +1,6 @@
 <template>
   <div class="tags">
-    <div class="new"><button>新增标签</button></div>
+    <div class="new"><button @click="createTag">新增标签</button></div>
     <ul class="current">
       <li
         v-for="(tag, index) in props.dataSource"
@@ -20,16 +20,32 @@ import { reactive } from "vue";
 const props = defineProps({
   dataSource: {
     type: Array,
+    default: () => [],
+  },
+  value: {
+    type: Array,
+    default: () => [],
   },
 });
+const emit = defineEmits(["update:dataSource", "update:value"]);
 
 const selectedTags = reactive([]);
+
 const toggle = (tag: string) => {
   const index = selectedTags.indexOf(tag);
   if (index >= 0) {
     selectedTags.splice(index, 1);
   } else {
     selectedTags.push(tag);
+  }
+  emit("update:value", selectedTags);
+};
+const createTag = () => {
+  const tagName = window.prompt("请输入标签名称");
+  if (tagName === "") {
+    window.alert("标签名称不能为空");
+  } else {
+    emit("update:dataSource", props.dataSource.push(tagName));
   }
 };
 </script>

@@ -45,7 +45,7 @@ const createTag = () => {
   if (tagName === "") {
     window.alert("标签名称不能为空");
   } else {
-    emit("update:dataSource", props.dataSource.push(tagName));
+    emit("update:dataSource", props.dataSource.push());
   }
 };
 </script>

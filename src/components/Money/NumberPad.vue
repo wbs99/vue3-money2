@@ -35,7 +35,7 @@ const props = defineProps({
     default: 0,
   },
 });
-const emit = defineEmits(["update:value"]);
+const emit = defineEmits(["update:value", "submit"]);
 
 const inputContent = (event: MouseEvent) => {
   const button = event.target as HTMLButtonElement;
@@ -69,6 +69,8 @@ const deleteContent = () => {
 };
 const ok = () => {
   emit("update:value", parseFloat(output.value));
+  emit("submit");
+  output.value = props.value.toString();
 };
 </script>
 

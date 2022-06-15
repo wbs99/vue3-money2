@@ -70,7 +70,7 @@ const deleteContent = () => {
 const ok = () => {
   emit("update:value", parseFloat(output.value));
   emit("submit");
-  output.value = props.value.toString();
+  output.value = "0";
 };
 </script>
 

@@ -38,7 +38,7 @@ const toggle = (tag: string) => {
   } else {
     selectedTags.push(tag);
   }
-  emit("update:value", selectedTags);
+  emit("update:value", [...selectedTags]);
 };
 const createTag = () => {
   const tagName = window.prompt("请输入标签名称");

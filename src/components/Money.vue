@@ -13,34 +13,25 @@ import NumberPad from "./Money/NumberPad.vue";
 import Types from "./Money/Types.vue";
 import Notes from "./Money/Notes.vue";
 import Tags from "./Money/Tags.vue";
-import { reactive, watch } from "vue";
-
-type Record = {
-  amount: number;
-  type: string;
-  notes: string;
-  tags: string[];
-  createdAt?: Date;
-};
+import { onMounted, reactive, watch } from "vue";
+import { model } from "../model";
 
 let tags = reactive(["衣", "食", "住", "行"]);
-const record: Record = reactive({
+const record: RecordItem = reactive({
   amount: 0,
   type: "-",
   notes: "",
   tags: [],
 });
-const recordList: Record[] = reactive(
-  JSON.parse(window.localStorage.getItem("recordList")) || []
-);
+const recordList = reactive(model.fetch());
 
 const saveRecord = () => {
   const cloneRecord = { ...record };
   cloneRecord.createdAt = new Date();
   recordList.push(cloneRecord);
 };
-watch(recordList, newValue => {
-  window.localStorage.setItem("recordList", JSON.stringify(newValue));
+watch(recordList, data => {
+  model.save(data);
 });
 </script>
 

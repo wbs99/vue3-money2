@@ -5,7 +5,7 @@
       <li
         v-for="(tag, index) in props.dataSource"
         :key="index"
-        :class="selectedTags.includes(tag as string) ? 'selected' : ''"
+        :class="selectedTags.includes(tag) ? 'selected' : ''"
         @click="toggle(tag as string)"
       >
         {{ tag }}

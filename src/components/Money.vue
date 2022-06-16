@@ -1,6 +1,5 @@
 <template>
   <Layout classPerFix="layout">
-    {{ recordList }}
     <NumberPad v-model:value="record.amount" @submit="saveRecord" />
     <Types v-model:value="record.type" />
     <Notes v-model:value="record.notes" />
@@ -13,7 +12,7 @@ import NumberPad from "./Money/NumberPad.vue";
 import Types from "./Money/Types.vue";
 import Notes from "./Money/Notes.vue";
 import Tags from "./Money/Tags.vue";
-import { computed, reactive, watch } from "vue";
+import { computed, onMounted, reactive, watch } from "vue";
 import useStore from "@/store/index";
 
 const { tagListStore, recordListStore } = useStore();
@@ -31,6 +30,9 @@ const saveRecord = () => {
   cloneRecord.createdAt = new Date();
   recordList.push(cloneRecord);
 };
+onMounted(() => {
+  tagListStore.fetchTagList();
+});
 watch(recordList, data => {
   recordListStore.saveRecordList(data);
 });

@@ -13,17 +13,18 @@ import NumberPad from "./Money/NumberPad.vue";
 import Types from "./Money/Types.vue";
 import Notes from "./Money/Notes.vue";
 import Tags from "./Money/Tags.vue";
-import { onMounted, reactive, watch } from "vue";
-import { model } from "../model";
+import { computed, reactive, watch } from "vue";
+import useStore from "@/store/index";
 
-let tags = reactive(["衣", "食", "住", "行"]);
+const { tagListStore, recordListStore } = useStore();
+const tags = computed(() => tagListStore.tagList);
 const record: RecordItem = reactive({
   amount: 0,
   type: "-",
   notes: "",
   tags: [],
 });
-const recordList = reactive(model.fetch());
+const recordList = reactive(recordListStore.fetchRecordList());
 
 const saveRecord = () => {
   const cloneRecord = { ...record };
@@ -31,7 +32,7 @@ const saveRecord = () => {
   recordList.push(cloneRecord);
 };
 watch(recordList, data => {
-  model.save(data);
+  recordListStore.saveRecordList(data);
 });
 </script>
 

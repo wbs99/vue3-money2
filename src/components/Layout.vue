@@ -1,6 +1,9 @@
 <template>
   <div class="layoutWrapper">
-    <div class="content" :class="classPerFix && `${classPerFix}-content`">
+    <div
+      class="content"
+      :class="props.classPerFix && `${props.classPerFix}-content`"
+    >
       <slot></slot>
     </div>
     <Nav />

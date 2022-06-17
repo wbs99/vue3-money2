@@ -8,8 +8,15 @@ export const tagListStore = defineStore("tagList", () => {
     this.tagList = JSON.parse(window.localStorage.getItem("tagList")) || [];
   }
   function createTag(name: string) {
-    this.tagList.push(name);
-    this.saveTag();
+    const names = this.tagList.map((item: Tag) => item.name);
+
+    if (names.indexOf(name) === -1) {
+      this.tagList.push({ id: name, name: name });
+      this.saveTag();
+      window.alert("添加成功~");
+    } else {
+      window.alert("标签名重复了");
+    }
   }
   function saveTag() {
     window.localStorage.setItem("tagList", JSON.stringify(this.tagList));

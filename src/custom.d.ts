@@ -12,3 +12,8 @@ type TagListModel = {
   create: (data: string) => void;
   save: () => void;
 };
+
+type Tag = {
+  name: string;
+  id: string;
+};

@@ -1,14 +1,28 @@
 import { createWebHashHistory, createRouter } from "vue-router";
-import Money from "../components/Money.vue";
-import Labels from "../components/Labels.vue";
-import Statistics from "../components/Statistics.vue";
+
+import EditLabel from "../components/EditLabel.vue";
 
 const routes = <Array<any>>[
   { path: "/", redirect: "/money" },
-
-  { path: "/money", component: Money },
-  { path: "/labels", component: Labels },
-  { path: "/statistics", component: Statistics },
+  { path: "/money", component: () => import("../components/Money.vue") },
+  {
+    path: "/labels",
+    component: () => import("../components/Labels.vue"),
+    // children: [
+    //   {
+    //     path: "edit",
+    //     component: () => import("../components/EditLabel.vue"),
+    //   },
+    // ],
+  },
+  {
+    path: "/labels/edit/:id",
+    component: () => import("../components/EditLabel.vue"),
+  },
+  {
+    path: "/statistics",
+    component: () => import("../components/Statistics.vue"),
+  },
   {
     path: "/:pathMatch(.*)",
     component: () => import("../components/NotFound.vue"),

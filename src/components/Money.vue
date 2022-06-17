@@ -2,7 +2,7 @@
   <Layout classPerFix="layout">
     <NumberPad v-model:value="record.amount" @submit="saveRecord" />
     <Types v-model:value="record.type" />
-    <Notes v-model:value="record.notes" />
+    <FormItem v-model:value="record.notes" />
     <Tags v-model:dataSource="tags" v-model:value="record.tags" />
   </Layout>
 </template>
@@ -10,7 +10,7 @@
 <script lang="ts" setup name="Money">
 import NumberPad from "./Money/NumberPad.vue";
 import Types from "./Money/Types.vue";
-import Notes from "./Money/Notes.vue";
+import FormItem from "./Money/FormItem.vue";
 import Tags from "./Money/Tags.vue";
 import { computed, onMounted, reactive, watch } from "vue";
 import useStore from "@/store/index";

@@ -4,7 +4,7 @@
       <Icon name="left" />
       <span>编辑标签</span>
     </div>
-    <Notes :filed-name="state.tag.name" placeholder="在这里修改标签名" />
+    <FormItem :filed-name="state.tag.name" placeholder="在这里修改标签名" />
   </Layout>
 </template>
 
@@ -12,7 +12,7 @@
 import { computed, onMounted, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import useStore from "@/store/index";
-import Notes from "./Money/Notes.vue";
+import FormItem from "./Money/FormItem.vue";
 
 const route = useRoute();
 const router = useRouter();

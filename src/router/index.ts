@@ -10,7 +10,7 @@ const routes = <Array<any>>[
     component: () => import("../components/Labels.vue"),
     // children: [
     //   {
-    //     path: "edit",
+    //     path: "edit/:id",
     //     component: () => import("../components/EditLabel.vue"),
     //   },
     // ],

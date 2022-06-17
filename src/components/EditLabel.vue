@@ -1,29 +1,39 @@
 <template>
-  <Layout> 编辑标签{{ tag.name }}</Layout>
+  <Layout>
+    <div>
+      <Icon name="left" />
+      <span>编辑标签</span>
+    </div>
+    <Notes :filed-name="state.tag.name" placeholder="在这里修改标签名" />
+  </Layout>
 </template>
 
 <script lang="ts" setup>
 import { computed, onMounted, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import useStore from "@/store/index";
+import Notes from "./Money/Notes.vue";
 
 const route = useRoute();
 const router = useRouter();
 const { tagListStore } = useStore();
 
-let tag = reactive({
-  name: "",
-  id: "",
+const tagsList = computed(() => tagListStore.tagList);
+const state = reactive({
+  tag: {
+    name: "",
+    id: "",
+  },
 });
 
 onMounted(() => {
   const id = route.params.id;
-  tagListStore.tagList.find(item => {
+
+  tagsList.value.find(item => {
     if (item.id === id) {
-      tag = item;
-      console.log(tag);
+      state.tag = item;
     }
   });
-  tag.name === "" && router.push("/404");
+  state.tag.name === "" && router.push("/404");
 });
 </script>

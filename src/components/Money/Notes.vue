@@ -1,8 +1,8 @@
 <template>
   <div>
     <label class="notes">
-      <span class="name">备注</span>
-      <input type="text" placeholder="在这里输入备注" v-model="value" />
+      <span class="name">{{ props.filedName }}</span>
+      <input type="text" :placeholder="props.placeholder" v-model="value" />
     </label>
   </div>
 </template>
@@ -14,6 +14,14 @@ const props = defineProps({
   value: {
     type: String,
     default: "",
+  },
+  filedName: {
+    type: String,
+    default: "备注",
+  },
+  placeholder: {
+    type: String,
+    default: "在这里输入备注",
   },
 });
 const emit = defineEmits(["update:value"]);

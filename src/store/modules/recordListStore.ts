@@ -1,20 +1,16 @@
 import { defineStore } from "pinia";
+import { reactive } from "vue";
 
-export const recordListStore = defineStore("recordListStore", {
-  state: () => {
-    return {
-      tagList: [],
-    };
-  },
-  getters: {},
-  actions: {
-    fetchRecordList() {
-      return (JSON.parse(window.localStorage.getItem("recordList")) ||
-        []) as RecordItem[];
-    },
+export const recordListStore = defineStore("recordList", () => {
+  const recordList = reactive([]);
 
-    saveRecordList(data: RecordItem[]) {
-      window.localStorage.setItem("recordList", JSON.stringify(data));
-    },
-  },
+  function fetchRecordList() {
+    return (JSON.parse(window.localStorage.getItem("recordList")) ||
+      []) as RecordItem[];
+  }
+  function saveRecordList(data: RecordItem[]) {
+    window.localStorage.setItem("recordList", JSON.stringify(data));
+  }
+
+  return { recordList, fetchRecordList, saveRecordList };
 });

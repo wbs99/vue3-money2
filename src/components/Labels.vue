@@ -11,7 +11,7 @@
       </router-link>
     </ol>
     <div class="createTag-wrapper">
-      <button class="createTag" @click="createTag">新增标签</button>
+      <Button @click="createTag">新增标签</Button>
     </div>
   </Layout>
 </template>
@@ -20,6 +20,7 @@
 import Layout from "./Layout.vue";
 import { onMounted, computed } from "vue";
 import useStore from "@/store/index";
+import Button from "./Button.vue";
 
 const { tagListStore } = useStore();
 const tags = computed(() => tagListStore.tagList);
@@ -52,19 +53,6 @@ const createTag = () => {
       width: 18px;
       height: 18px;
     }
-  }
-}
-.createTag {
-  background: #767676;
-  color: white;
-  border-radius: 4px;
-  border: none;
-  height: 40px;
-  padding: 0 16px;
-  &-wrapper {
-    text-align: center;
-    padding: 16px;
-    margin-top: 44-16px;
   }
 }
 </style>

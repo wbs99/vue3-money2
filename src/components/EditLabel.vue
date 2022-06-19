@@ -5,6 +5,7 @@
       <span>编辑标签</span>
     </div>
     <FormItem :filed-name="state.tag.name" placeholder="在这里修改标签名" />
+    <Button>删除标签</Button>
   </Layout>
 </template>
 
@@ -13,6 +14,8 @@ import { computed, onMounted, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import useStore from "@/store/index";
 import FormItem from "./Money/FormItem.vue";
+import BUtton from "./Button.vue";
+import Button from "./Button.vue";
 
 const route = useRoute();
 const router = useRouter();

@@ -57,6 +57,7 @@ const createTag = () => {
   padding: 16px;
   display: flex;
   flex-direction: column-reverse;
+  background-color: white;
   > .current {
     display: flex;
     flex-wrap: wrap;

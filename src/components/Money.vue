@@ -2,7 +2,9 @@
   <Layout classPerFix="layout">
     <NumberPad v-model:value="record.amount" @submit="saveRecord" />
     <Types v-model:value="record.type" />
-    <FormItem v-model:value="record.notes" />
+    <div class="notes">
+      <FormItem v-model:value="record.notes" />
+    </div>
     <Tags v-model:dataSource="tags" v-model:value="record.tags" />
   </Layout>
 </template>
@@ -38,4 +40,8 @@ watch(recordList, data => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.notes {
+  padding: 12px 0;
+}
+</style>

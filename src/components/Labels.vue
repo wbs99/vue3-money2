@@ -55,4 +55,8 @@ const createTag = () => {
     }
   }
 }
+.createTag-wrapper {
+  text-align: center;
+  margin-top: 48px;
+}
 </style>

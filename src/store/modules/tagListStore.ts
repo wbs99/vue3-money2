@@ -21,6 +21,20 @@ export const tagListStore = defineStore("tagList", () => {
   function saveTag() {
     window.localStorage.setItem("tagList", JSON.stringify(this.tagList));
   }
+  function updateTag(id: string, name: string) {
+    const tag = this.tagList.find((item: Tag) => item.id === id);
+    if (tag) {
+      tag.name = name;
+      this.saveTag();
+    }
+  }
+  function deleteTag(id: string) {
+    const index = this.tagList.findIndex((item: Tag) => item.id === id);
+    if (index !== -1) {
+      this.tagList.splice(index, 1);
+      this.saveTag();
+    }
+  }
 
-  return { tagList, fetchTagList, createTag, saveTag };
+  return { tagList, fetchTagList, createTag, saveTag, updateTag, deleteTag };
 });

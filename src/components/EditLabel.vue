@@ -1,15 +1,19 @@
 <template>
   <Layout>
     <div class="navbar">
-      <Icon name="left" class="leftIcon" />
+      <Icon name="left" class="leftIcon" @click="goBack" />
       <span>编辑标签</span>
       <span class="rightIcon"></span>
     </div>
     <div class="formWrapper">
-      <FormItem :filed-name="state.tag.name" placeholder="在这里修改标签名" />
+      <FormItem
+        :filed-name="state.tag.name"
+        placeholder="在这里修改标签名"
+        @update:value="updateTag"
+      />
     </div>
     <div class="buttonWrapper">
-      <Button>删除标签</Button>
+      <Button @click="deleteTag(state.tag.id)">删除标签</Button>
     </div>
   </Layout>
 </template>
@@ -19,7 +23,6 @@ import { computed, onMounted, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import useStore from "@/store/index";
 import FormItem from "./Money/FormItem.vue";
-import BUtton from "./Button.vue";
 import Button from "./Button.vue";
 
 const route = useRoute();
@@ -36,7 +39,6 @@ const state = reactive({
 
 onMounted(() => {
   const id = route.params.id;
-
   tagsList.value.find(item => {
     if (item.id === id) {
       state.tag = item;
@@ -44,6 +46,16 @@ onMounted(() => {
   });
   state.tag.name === "" && router.push("/404");
 });
+function updateTag(value: string) {
+  tagListStore.updateTag(state.tag.id, value);
+}
+const deleteTag = (id: string) => {
+  tagListStore.deleteTag(id);
+  router.push("/labels");
+};
+const goBack = () => {
+  router.back();
+};
 </script>
 
 <style lang="scss" scoped>

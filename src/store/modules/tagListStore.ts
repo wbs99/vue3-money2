@@ -1,3 +1,4 @@
+import { createId } from "./../../lib/createId";
 import { defineStore } from "pinia";
 import { reactive } from "vue";
 
@@ -9,9 +10,9 @@ export const tagListStore = defineStore("tagList", () => {
   }
   function createTag(name: string) {
     const names = this.tagList.map((item: Tag) => item.name);
-
     if (names.indexOf(name) === -1) {
-      this.tagList.push({ id: name, name: name });
+      const id = createId().toString();
+      this.tagList.push({ id, name: name });
       this.saveTag();
       window.alert("添加成功~");
     } else {

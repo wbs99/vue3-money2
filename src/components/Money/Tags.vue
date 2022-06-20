@@ -6,9 +6,9 @@
         v-for="(tag, index) in props.dataSource"
         :key="index"
         :class="selectedTags.includes(tag) ? 'selected' : ''"
-        @click="toggle(tag as string)"
+        @click="toggle(tag)"
       >
-        {{ tag }}
+        {{ tag.name }}
       </li>
     </ul>
   </div>
@@ -19,7 +19,7 @@ import { reactive } from "vue";
 
 const props = defineProps({
   dataSource: {
-    type: Array,
+    type: Array<Tag>,
     default: () => [],
   },
   value: {
@@ -31,10 +31,10 @@ const emit = defineEmits(["update:dataSource", "update:value"]);
 
 const selectedTags = reactive([]);
 
-const toggle = (tag: string) => {
-  const index = selectedTags.indexOf(tag);
-  if (index >= 0) {
-    selectedTags.splice(index, 1);
+const toggle = (tag: Tag) => {
+  console.log(tag);
+  if (selectedTags.includes(tag)) {
+    selectedTags.splice(selectedTags.indexOf(tag), 1);
   } else {
     selectedTags.push(tag);
   }

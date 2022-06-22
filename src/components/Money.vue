@@ -14,7 +14,7 @@ import NumberPad from "./Money/NumberPad.vue";
 import Types from "./Money/Types.vue";
 import FormItem from "./Money/FormItem.vue";
 import Tags from "./Money/Tags.vue";
-import { computed, onMounted, reactive, watch } from "vue";
+import { computed, onMounted, reactive } from "vue";
 import useStore from "@/store/index";
 
 const { tagListStore, recordListStore } = useStore();
@@ -25,18 +25,13 @@ const record: RecordItem = reactive({
   notes: "",
   tags: [],
 });
-const recordList = reactive(recordListStore.fetchRecordList());
 
 const saveRecord = () => {
-  const cloneRecord = { ...record };
-  cloneRecord.createdAt = new Date();
-  recordList.push(cloneRecord);
+  recordListStore.createRecord(record);
 };
 onMounted(() => {
+  recordListStore.fetchRecordList();
   tagListStore.fetchTagList();
-});
-watch(recordList, data => {
-  recordListStore.saveRecordList(data);
 });
 </script>
 

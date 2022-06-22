@@ -5,12 +5,20 @@ export const recordListStore = defineStore("recordList", () => {
   const recordList = reactive([]);
 
   function fetchRecordList() {
-    return (JSON.parse(window.localStorage.getItem("recordList")) ||
+    this.recordList = (JSON.parse(window.localStorage.getItem("recordList")) ||
       []) as RecordItem[];
   }
-  function saveRecordList(data: RecordItem[]) {
-    window.localStorage.setItem("recordList", JSON.stringify(data));
+
+  function createRecord(record: RecordItem) {
+    const cloneRecord = JSON.parse(JSON.stringify(record));
+    cloneRecord.createdAt = new Date();
+    this.recordList.push(cloneRecord);
+    this.saveRecordList();
   }
 
-  return { recordList, fetchRecordList, saveRecordList };
+  function saveRecordList() {
+    window.localStorage.setItem("recordList", JSON.stringify(this.recordList));
+  }
+
+  return { recordList, fetchRecordList, saveRecordList, createRecord };
 });

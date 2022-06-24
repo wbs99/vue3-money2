@@ -5,7 +5,7 @@
     <div class="notes">
       <FormItem v-model:value="record.notes" />
     </div>
-    <Tags v-model:dataSource="tags" v-model:value="record.tags" />
+    <Tags v-model:value="record.tags" />
   </Layout>
 </template>
 
@@ -14,11 +14,11 @@ import NumberPad from "./Money/NumberPad.vue";
 import Types from "./Money/Types.vue";
 import FormItem from "./Money/FormItem.vue";
 import Tags from "./Money/Tags.vue";
-import { computed, onMounted, reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import useStore from "@/store/index";
 
 const { tagListStore, recordListStore } = useStore();
-const tags = computed(() => tagListStore.tagList);
+
 const record: RecordItem = reactive({
   amount: 0,
   type: "-",

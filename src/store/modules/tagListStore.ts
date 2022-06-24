@@ -7,6 +7,7 @@ export const tagListStore = defineStore("tagList", () => {
 
   function fetchTagList() {
     this.tagList = JSON.parse(window.localStorage.getItem("tagList")) || [];
+    return this.tagList;
   }
   function createTag(name: string) {
     const names = this.tagList.map((item: Tag) => item.name);

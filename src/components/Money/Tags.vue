@@ -3,7 +3,7 @@
     <div class="new"><button @click="createTag">新增标签</button></div>
     <ul class="current">
       <li
-        v-for="(tag, index) in props.dataSource"
+        v-for="(tag, index) in tags"
         :key="index"
         :class="selectedTags.includes(tag) ? 'selected' : ''"
         @click="toggle(tag)"
@@ -15,24 +15,13 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue";
-
-const props = defineProps({
-  dataSource: {
-    type: Array<Tag>,
-    default: () => [],
-  },
-  value: {
-    type: Array,
-    default: () => [],
-  },
-});
-const emit = defineEmits(["update:dataSource", "update:value"]);
-
+import useStore from "@/store/index";
+import { computed, reactive } from "vue";
+const { tagListStore } = useStore();
+const emit = defineEmits(["update:value"]);
 const selectedTags = reactive([]);
-
+const tags = computed(() => tagListStore.tagList);
 const toggle = (tag: Tag) => {
-  console.log(tag);
   if (selectedTags.includes(tag)) {
     selectedTags.splice(selectedTags.indexOf(tag), 1);
   } else {
@@ -45,7 +34,7 @@ const createTag = () => {
   if (tagName === "") {
     window.alert("标签名称不能为空");
   } else {
-    emit("update:dataSource", props.dataSource.push());
+    tagListStore.createTag(tagName);
   }
 };
 </script>

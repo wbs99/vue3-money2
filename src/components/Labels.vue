@@ -21,6 +21,8 @@ import Layout from "./Layout.vue";
 import { onMounted, computed } from "vue";
 import useStore from "@/store/index";
 import Button from "./Button.vue";
+import { useCreateTag } from "../hooks/useCreateTag";
+const { createTagHooks } = useCreateTag();
 
 const { tagListStore } = useStore();
 const tags = computed(() => tagListStore.tagList);
@@ -29,10 +31,7 @@ onMounted(() => {
 });
 
 const createTag = () => {
-  const tagName = window.prompt("请输入标签名");
-  if (tagName) {
-    tagListStore.createTag(tagName);
-  }
+  createTagHooks();
 };
 </script>
 

@@ -17,8 +17,12 @@
 <script lang="ts" setup>
 import useStore from "@/store/index";
 import { computed, reactive } from "vue";
+import { useCreateTag } from "../../hooks/useCreateTag";
+
+const { createTagHooks } = useCreateTag();
 const { tagListStore } = useStore();
 const emit = defineEmits(["update:value"]);
+
 const selectedTags = reactive([]);
 const tags = computed(() => tagListStore.tagList);
 const toggle = (tag: Tag) => {
@@ -30,12 +34,7 @@ const toggle = (tag: Tag) => {
   emit("update:value", [...selectedTags]);
 };
 const createTag = () => {
-  const tagName = window.prompt("请输入标签名称");
-  if (tagName === "") {
-    window.alert("标签名称不能为空");
-  } else {
-    tagListStore.createTag(tagName);
-  }
+  createTagHooks();
 };
 </script>
 

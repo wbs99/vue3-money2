@@ -1,35 +1,45 @@
 <template>
   <div>
-    <ul class="types">
-      <li :class="props.value === '-' && 'selected'" @click="selectTypes('-')">
-        支出
-      </li>
-      <li :class="props.value === '+' && 'selected'" @click="selectTypes('+')">
-        收入
+    <ul class="tabs">
+      <li
+        v-for="item in dataSource"
+        :key="item.value"
+        @click="select(item)"
+        :class="{
+          selected: item.value === props.selected,
+          [classPrefix + '-tabs-item']: classPrefix,
+        }"
+      >
+        {{ item.text }}
       </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts" setup name="Types">
+import { PropType } from "vue";
+
 const props = defineProps({
-  value: {
+  dataSource: {
+    type: Array as PropType<TabItem[]>,
+    default: () => [],
+  },
+  selected: {
     type: String,
-    default: "-",
+  },
+  classPrefix: {
+    type: String,
   },
 });
-const emit = defineEmits(["update:value"]);
+const emit = defineEmits(["update:selected"]);
 
-const selectTypes = (type: string) => {
-  if (type !== "-" && type !== "+") {
-    throw new Error("type must be '-' or '+'");
-  }
-  emit("update:value", type);
+const select = (item: TabItem) => {
+  emit("update:selected", item.value);
 };
 </script>
 
 <style lang="scss" scoped>
-.types {
+.tabs {
   background: #c4c4c4;
   display: flex;
   text-align: center;

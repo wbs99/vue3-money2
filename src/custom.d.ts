@@ -17,3 +17,8 @@ type Tag = {
   name: string;
   id: string;
 };
+
+type TabItem = {
+  text: string;
+  value: string;
+};

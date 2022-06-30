@@ -2,13 +2,14 @@
   <div>
     <ul class="tabs">
       <li
-        v-for="item in dataSource"
-        :key="item.value"
-        @click="select(item)"
+        class="tabs-item"
         :class="{
           selected: item.value === props.selected,
           [classPrefix + '-tabs-item']: classPrefix,
         }"
+        v-for="item in dataSource"
+        :key="item.value"
+        @click="select(item)"
       >
         {{ item.text }}
       </li>
@@ -44,7 +45,7 @@ const select = (item: TabItem) => {
   display: flex;
   text-align: center;
   font-size: 24px;
-  > li {
+  &-item {
     width: 50%;
     height: 64px;
     display: flex;

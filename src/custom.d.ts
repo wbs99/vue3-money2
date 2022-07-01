@@ -22,3 +22,5 @@ type TabItem = {
   text: string;
   value: string;
 };
+
+type HashTableValue = { title: string; items: RecordItem[] };

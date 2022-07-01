@@ -9,12 +9,11 @@
 
     <div>
       <ol>
-        <li v-for="group in result" :key="group.title">
+        <li v-for="(group, index) in groupList" :key="index">
           <h3 class="title">{{ beautifyTime(group.title) }}</h3>
           <ol>
             <li v-for="item in group.items" :key="item.id" class="record">
               <span>{{ tagString(item.tags) }}</span>
-              <!-- <span>{{ item.tags }}</span> -->
               <span class="notes">{{ item.notes }}</span>
               ￥{{ item.amount }}
             </li>
@@ -47,16 +46,32 @@ const timeList = reactive([
 const recordList = computed(() => {
   return recordListStore.recordList;
 });
-const result = computed(() => {
-  const x = recordListStore.recordList;
-  const hashTable: { [key: string]: HashTableValue } = {};
-  x.map(item => {
-    const [date] = item.createdAt.toString().split("T");
-    hashTable[date] = hashTable[date] || { title: date, items: [] };
-    hashTable[date].items.push(item);
+const groupList = computed(() => {
+  const x = JSON.parse(JSON.stringify(recordListStore.recordList));
+  if (x.length === 0) return [];
+  const newList = x.sort(
+    (a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
+  );
+  const result = [];
+  newList.map(item => {
+    if (result.length === 0) {
+      result.push({
+        title: dayjs(newList[0].createdAt).format("YYYY-MM-DD"),
+        items: [newList[0]],
+      });
+    } else {
+      const last = result[result.length - 1];
+      if (dayjs(last.title).isSame(dayjs(item.createdAt), "day")) {
+        last.items.push(item);
+      } else {
+        result.push({
+          title: dayjs(item.createdAt).format("YYYY-MM-DD"),
+          items: [item],
+        });
+      }
+    }
   });
-
-  return hashTable;
+  return result;
 });
 const tagString = (tags: Tag[]) => {
   if (tags.length === 0) {

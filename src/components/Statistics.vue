@@ -9,8 +9,8 @@
 
     <div>
       <ol>
-        <li v-for="(group, index) in result" :key="index">
-          <h3 class="title">{{ group.title }}</h3>
+        <li v-for="group in result" :key="group.title">
+          <h3 class="title">{{ beautifyTime(group.title) }}</h3>
           <ol>
             <li v-for="item in group.items" :key="item.id" class="record">
               <span>{{ tagString(item.tags) }}</span>
@@ -27,9 +27,10 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, reactive, ref } from "vue";
+import dayjs from "dayjs";
 import Tabs from "./Tabs.vue";
 import useStore from "@/store/index";
-import TagsVue from "./Money/Tags.vue";
+
 const { recordListStore } = useStore();
 
 const type = ref("-");
@@ -43,7 +44,6 @@ const timeList = reactive([
   { text: "按周", value: "week" },
   { text: "按月", value: "month" },
 ]);
-//const tagNameArray = reactive([]);
 const recordList = computed(() => {
   return recordListStore.recordList;
 });
@@ -71,20 +71,36 @@ const tagString = (tags: Tag[]) => {
   }
 };
 
+function beautifyTime(string: string) {
+  const day = dayjs(string);
+  const now = dayjs();
+  if (day.isSame(now, "day")) {
+    return "今天";
+  } else if (day.isSame(now.subtract(1, "day"), "day")) {
+    return "昨天";
+  } else if (day.isSame(now.subtract(2, "day"), "day")) {
+    return "前天";
+  } else if (day.isSame(now, "year")) {
+    return day.format("M月D日");
+  } else {
+    return day.format("YYYY年M月D日");
+  }
+}
+
 onMounted(() => {
   recordListStore.fetchRecordList();
 });
 </script>
 
 <style lang="scss" scoped>
-::v-deep .type-tabs-item,
+:deep() .type-tabs-item,
 .time-tabs-item {
   background: white;
   &.selected {
     background: #c4c4c4;
   }
 }
-::v-deep .time-tabs-item {
+:deep() .time-tabs-item {
   height: 48px;
 }
 %item {
